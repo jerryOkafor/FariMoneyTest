@@ -42,18 +42,14 @@ abstract class NetworkBoundResource<T> {
             .flatMapConcat { data ->
                 if (shouldFetch(data)) {
                     emit(Resource.Loading(data))
-                    Timber.d("DDD 1")
                     try {
                         saveFetchResult(fetch())
-                        Timber.d("DDD 2")
                         query().map { Resource.Success(it) }
                     } catch (throwable: Throwable) {
                         onFetchFailed(throwable)
-                        Timber.d("DDD 3 $throwable")
                         query().map { Resource.Error(throwable.message!!, it) }
                     }
                 } else {
-                    Timber.d("DDD 4")
                     query().map { Resource.Success(it) }
                 }
             }

@@ -81,7 +81,6 @@ object Injector {
                     context: Context
                 ) {
                     if (f is Injectable) {
-                        Timber.d("Injecting: $f")
                         AndroidSupportInjection.inject(f)
                     }
                 }

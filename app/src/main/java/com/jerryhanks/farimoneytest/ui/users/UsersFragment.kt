@@ -86,7 +86,6 @@ class UsersFragment : Fragment(), Injectable {
             LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
 
         usersAdapter = UsersAdapter(requireContext()) { user, imageView, tvName, tvEmail ->
-            Timber.d("DDD User: $user")
             val extras = FragmentNavigatorExtras(
                 imageView to "ivDetailProfilePic",
                 tvName to "tvDetailName",
