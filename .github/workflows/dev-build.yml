@@ -23,6 +23,7 @@ jobs:
         run: bash ./gradlew test --stacktrace
 
   test-instrumentation:
+    name: Run Instrumentation Test
     runs-on: macos-latest
     strategy:
       matrix:
