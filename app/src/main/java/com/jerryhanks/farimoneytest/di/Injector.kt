@@ -7,7 +7,6 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
-import com.example.testapp.di.Injectable
 import com.jerryhanks.farimoneytest.App
 import dagger.android.AndroidInjection
 import dagger.android.HasAndroidInjector

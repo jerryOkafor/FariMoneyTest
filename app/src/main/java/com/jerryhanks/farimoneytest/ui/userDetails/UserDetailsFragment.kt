@@ -15,7 +15,7 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.example.testapp.di.Injectable
+import com.jerryhanks.farimoneytest.di.Injectable
 import com.google.android.material.snackbar.Snackbar
 import com.jerryhanks.farimoneytest.R
 import com.jerryhanks.farimoneytest.data.models.Resource
@@ -72,11 +72,13 @@ class UserDetailsFragment : Fragment(), Injectable {
                         binding.tvPhone.text = it.data?.phone
                         val location = it.data?.location
 
-                        binding.tvLocation.text = """
-                                ${location?.street}, ${location?.city}
-                                ${location?.city}, ${location?.state}
-                                ${location?.country}
-                            """.trimIndent()
+                        val locationPlaceholder = getString(R.string.location_placeholder,
+                            location?.street,
+                            location?.city,
+                            location?.city,
+                            location?.state,
+                            location?.country)
+                        binding.tvLocation.text = locationPlaceholder
 
                         binding.progressBar.visibility = View.INVISIBLE
                         binding.otherDetails.visibility = View.VISIBLE
@@ -122,7 +124,7 @@ class UserDetailsFragment : Fragment(), Injectable {
             })
             .into(binding.ivDetailProfilePic)
 
-        val fullName = "${args.title} ${args.firstName} ${args.lastName}"
+        val fullName = getString(R.string.fullname_placeholder,args.title,args.firstName,args.lastName)
 
         binding.tvDetailName.text = fullName
         binding.tvDetailEmail.text = args.email

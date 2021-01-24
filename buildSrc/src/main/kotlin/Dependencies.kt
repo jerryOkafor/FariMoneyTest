@@ -13,10 +13,8 @@ object Config {
         const val versionCode = 1
     }
 
-    const val isMultiDexEnabled = true
-
     object Android {
-        const val applicationId = "com.example.testapp"
+        const val applicationId = "com.jerryhanks.fairmoneytest"
         const val testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 }
@@ -181,7 +179,7 @@ object Dependencies {
             const val robolectric = "4.5"
         }
 
-//        const val mockitoCore = "org.mockito:mockito-android:${Versions.mockitoCore}"
+        //        const val mockitoCore = "org.mockito:mockito-android:${Versions.mockitoCore}"
         const val mockitoInline = "org.mockito:mockito-inline:${Versions.mockitoCore}"
         const val junit = "junit:junit:${Versions.junit}"
         const val mockWebServer =
@@ -200,7 +198,6 @@ object Dependencies {
             const val testExtTruth = "1.3.0"
             const val espresso = "3.2.0"
             const val benchmark = "1.0.0"
-            const val orchestrator = "1.3.1-alpha03"
         }
 
         const val testExtJunitKtx = "androidx.test.ext:junit-ktx:${Versions.testExtJunit}"
@@ -212,9 +209,8 @@ object Dependencies {
         const val espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
         const val espressoContrib = "androidx.test.espresso:espresso-contrib:${Versions.espresso}"
 
-        const val junitBenchmark = "androidx.benchmark:benchmark-junit4:${Versions.benchmark}"
 
         override val components =
-            listOf(espresso, junitBenchmark, testRunner, testCoreKtx)
+            listOf(espresso, testRunner, testCoreKtx)
     }
 }

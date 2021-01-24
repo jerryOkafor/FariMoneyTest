@@ -20,14 +20,15 @@ jobs:
         with:
           java-version: 1.8
       - name: Unit tests
-        run: bash ./gradlew test --stacktrace
+        run: bash ./gradlew testDebugUnitTest --stacktrace
 
   test-instrumentation:
     name: Run Instrumentation Test
     runs-on: macos-latest
     strategy:
       matrix:
-        api-level: [21, 23, 29]
+#        api-level: [21, 23, 29]
+        api-level: [30]
         target: [default, google_apis]
     steps:
       - name: checkout
@@ -39,11 +40,11 @@ jobs:
           api-level: ${{ matrix.api-level }}
           target: ${{ matrix.target }}
           arch: x86_64
-          profile: Nexus 6
-          script: ./gradlew connectedCheck
+          profile: Pixel 4
+          script: ./gradlew connectedDebugAndroidTest
 
   apk:
-    name: Generate APK
+    name: Build APK
     runs-on: macos-latest
 
     steps:

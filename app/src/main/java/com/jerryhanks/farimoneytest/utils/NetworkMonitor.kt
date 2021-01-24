@@ -15,7 +15,7 @@ import kotlin.properties.Delegates
 object NetworkMonitor {
 
     var isNetworkConnected: Boolean by Delegates.observable(false) { property, oldValue, newValue ->
-        Timber.d("Network connectivity $newValue")
+        Timber.d("Network connectivity changed from $oldValue to $newValue : $property")
     }
 
     fun startNetworkCallback(context: Context) {

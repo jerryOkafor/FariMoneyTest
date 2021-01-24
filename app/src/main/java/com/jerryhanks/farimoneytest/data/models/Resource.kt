@@ -36,7 +36,6 @@ inline fun <ResultType, RequestType> networkBoundResource(
 }
 
 abstract class NetworkBoundResource<T> {
-
     fun asFlow(): Flow<Resource<T>> = flow {
         val flow = query()
             .onStart { emit(Resource.Loading<T>(null)) }

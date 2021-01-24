@@ -4,4 +4,10 @@
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">Users</string>
     <string name="second_fragment_label">User Details</string>
+    <string name="location_placeholder" formatted="false">
+        %s, %s\n
+        %s, %s\n
+        %s
+    </string>
+    <string name="fullname_placeholder" formatted="false">%s %s %s</string>
 </resources>

@@ -49,7 +49,7 @@ class UsersFragmentTest {
 
     @Before
     fun setUp() {
-        MockitoAnnotations.openMocks(this)
+        MockitoAnnotations.initMocks(this)
 
         viewModel = UsersViewModel(dataSource, provideFakeCoroutinesDispatcherProvider())
 

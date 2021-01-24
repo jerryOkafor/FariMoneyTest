@@ -11,12 +11,14 @@ import com.jerryhanks.farimoneytest.data.api.DummyApiService
 import com.jerryhanks.farimoneytest.data.db.AppDatabase
 import com.jerryhanks.farimoneytest.utils.Constants
 import com.jerryhanks.farimoneytest.utils.LocalDateTimeConverter
+import com.jerryhanks.farimoneytest.utils.NetworkMonitor
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import timber.log.Timber
 import java.time.LocalDateTime
 import javax.inject.Singleton
 
@@ -47,7 +49,7 @@ class AppModule(val app: App) {
 
 
     @Provides
-    fun provideOkHttp(context: Context, cache: Cache): OkHttpClient {
+    fun provideOkHttp(cache: Cache): OkHttpClient {
         val client = OkHttpClient.Builder()
             .cache(cache)
 
@@ -57,16 +59,14 @@ class AppModule(val app: App) {
                 .header("app-id", BuildConfig.APP_ID)
                 .url(originalRequest.url())
 
-//            if (NetworkMonitor.isNetworkConnected) {
-//                Timber.d("Network")
-//                newRequestBuilder.addHeader("Cache-Control", "public, max-age=" + 5)
-//            } else {
-//                Timber.d("No Network")
-//                newRequestBuilder.addHeader(
-//                    "Cache-Control",
-//                    "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7
-//                )
-//            }
+            if (NetworkMonitor.isNetworkConnected) {
+                newRequestBuilder.addHeader("Cache-Control", "public, max-age=" + 5)
+            } else {
+                newRequestBuilder.addHeader(
+                    "Cache-Control",
+                    "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7
+                )
+            }
 
 
             val request = newRequestBuilder.build()
@@ -89,7 +89,7 @@ class AppModule(val app: App) {
 
     @Provides
     fun provideDummyDataSource(
-        apiService: DummyApiService, appDatabase: AppDatabase
+        apiService: DummyApiService, appDatabase: AppDatabase,
     ): DummyApiDataSource = DummyApiRepository(apiService = apiService, appDatabase)
 
 

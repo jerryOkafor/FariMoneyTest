@@ -1,4 +1,4 @@
-package com.example.testapp.di
+package com.jerryhanks.farimoneytest.di
 
 /**
  * Author: Jerry Okafor
