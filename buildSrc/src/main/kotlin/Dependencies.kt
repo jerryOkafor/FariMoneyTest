@@ -1,6 +1,6 @@
 /**
- * Author: Jerry Okafor
- * Project: TestApp
+ * Author: Jerry
+ * Project: FairmoneyTest
  */
 
 /**Default and Adroid Config*/

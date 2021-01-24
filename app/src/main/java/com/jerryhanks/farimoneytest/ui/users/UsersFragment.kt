@@ -6,27 +6,119 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.annotation.VisibleForTesting
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.testapp.di.Injectable
+import com.google.android.material.snackbar.Snackbar
 import com.jerryhanks.farimoneytest.R
+import com.jerryhanks.farimoneytest.data.models.Resource
+import com.jerryhanks.farimoneytest.databinding.FragmentUsersBinding
+import timber.log.Timber
+import javax.inject.Inject
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
-class UsersFragment : Fragment() {
+class UsersFragment : Fragment(), Injectable {
+
+    @Inject
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    lateinit var viewModelProviderFactory: ViewModelProvider.Factory
+
+    private val viewModel by lazy {
+        ViewModelProvider(
+            requireActivity(),
+            viewModelProviderFactory
+        ).get(UsersViewModel::class.java)
+    }
+
+    private var _binding: FragmentUsersBinding? = null
+    private val binding get() = _binding!!
+
+    private lateinit var usersAdapter: UsersAdapter
+
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_first, container, false)
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentUsersBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUpRecyclerView()
+        setUpSwipeToRefresh()
 
-        view.findViewById<Button>(R.id.button_first).setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        with(viewModel) {
+            result.observe(viewLifecycleOwner) {
+                when (it) {
+                    is Resource.Success -> {
+                        binding.swipeContainer.isRefreshing = false
+                        binding.recyclerView.visibility = View.VISIBLE
+                        usersAdapter.submitList(it.data)
+                    }
+
+                    is Resource.Loading -> {
+                        binding.swipeContainer.isRefreshing = true
+                        binding.recyclerView.visibility = View.INVISIBLE
+                    }
+                    is Resource.Error -> {
+                        binding.swipeContainer.isRefreshing = false
+                        binding.recyclerView.visibility = View.VISIBLE
+                        Snackbar.make(
+                            binding.root,
+                            "Error loading users: ${it.message}, please try again.",
+                            Snackbar.LENGTH_LONG
+                        )
+                            .show()
+                    }
+                }
+            }
+
+            getUsers()
         }
+    }
+
+
+    private fun setUpRecyclerView() {
+        val linearLayoutManager =
+            LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+
+        usersAdapter = UsersAdapter(requireContext()) { user, imageView, tvName, tvEmail ->
+            Timber.d("DDD User: $user")
+            val extras = FragmentNavigatorExtras(
+                imageView to "ivDetailProfilePic",
+                tvName to "tvDetailName",
+                tvEmail to "tvDetailEmail"
+            )
+            val action =
+                UsersFragmentDirections.actionUsersFragmentToUserDetailsFragment(
+                    userId = user.id,
+                    email = user.email,
+                    picture = user.picture,
+                    title = user.title,
+                    firstName = user.firstName,
+                    lastName = user.lastName
+                )
+            findNavController().navigate(action, extras)
+        }
+
+        binding.recyclerView.layoutManager = linearLayoutManager
+        binding.recyclerView.adapter = usersAdapter
+    }
+
+    private fun setUpSwipeToRefresh() {
+        binding.swipeContainer.setOnRefreshListener {
+            usersAdapter.submitList(null)
+            viewModel.getUsers(forceReload = true)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

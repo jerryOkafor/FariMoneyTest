@@ -1,6 +1,6 @@
 /**
- * Author: Jerry Okafor
- * Project: TestApp
+ * Author: Jerry
+ * Project: FairmoneyTest
  */
 import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.kotlin.dsl.kotlin
