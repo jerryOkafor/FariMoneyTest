@@ -178,22 +178,27 @@ dependencies {
     testImplementation(AndroidTest.testExtTruth)
     testImplementation(Test.mockitoInline)
     testImplementation(Test.mockWebServer)
-
     testImplementation(Kotlin.coroutineCore)
-
     testImplementation(AndroidTest.espresso)
     testImplementation(AndroidTest.espressoContrib)
-
     testImplementation(AndroidX.archCoreTesting)
     testImplementation(Room.roomTesting)
     testImplementation(Test.robolectric)
 
 
     /**Android Test*/
+    androidTestImplementation(AndroidTest.testRunner)
+    androidTestImplementation(AndroidTest.testCoreKtx)
+    androidTestImplementation(AndroidTest.testRules)
+//    androidTestImplementation(AndroidTest.testExtension)
     androidTestImplementation(AndroidTest.testExtJunitKtx)
-
+    androidTestImplementation(AndroidTest.testExtTruth)
+    androidTestImplementation(Kotlin.coroutineCore)
+    androidTestImplementation(Kotlin.coroutineTest)
     androidTestImplementation(AndroidTest.espresso)
     androidTestImplementation(AndroidTest.espressoContrib)
+    androidTestImplementation(AndroidX.archCoreTesting)
+    androidTestImplementation(Room.roomTesting)
 
 
 }

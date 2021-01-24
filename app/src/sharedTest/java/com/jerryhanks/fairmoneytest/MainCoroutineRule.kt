@@ -70,3 +70,8 @@ class MainCoroutineRule(
 fun MainCoroutineRule.runBlocking(block: suspend () -> Unit) = this.testDispatcher.runBlockingTest {
     block()
 }
+
+@ExperimentalCoroutinesApi
+fun MainCoroutineRule.runBlockingTest(block: suspend () -> Unit) = this.testDispatcher.runBlockingTest {
+        block()
+    }

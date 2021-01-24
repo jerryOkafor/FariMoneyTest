@@ -213,7 +213,6 @@ object Dependencies {
         const val espressoContrib = "androidx.test.espresso:espresso-contrib:${Versions.espresso}"
 
         const val junitBenchmark = "androidx.benchmark:benchmark-junit4:${Versions.benchmark}"
-        const val orchestrator = "androidx.test:orchestrator:${Versions.orchestrator}"
 
         override val components =
             listOf(espresso, junitBenchmark, testRunner, testCoreKtx)
