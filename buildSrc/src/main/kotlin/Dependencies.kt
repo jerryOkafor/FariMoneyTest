@@ -178,13 +178,15 @@ object Dependencies {
         object Versions {
             const val junit = "4.13"
             const val mockitoCore = "3.7.7"
+            const val robolectric = "4.5"
         }
 
-        const val mockitoCore = "org.mockito:mockito-android:${Versions.mockitoCore}"
+//        const val mockitoCore = "org.mockito:mockito-android:${Versions.mockitoCore}"
         const val mockitoInline = "org.mockito:mockito-inline:${Versions.mockitoCore}"
         const val junit = "junit:junit:${Versions.junit}"
         const val mockWebServer =
             "com.squareup.okhttp3:mockwebserver:${Dependencies.Versions.okHttp}"
+        const val robolectric = "org.robolectric:robolectric:${Versions.robolectric}"
 
         override val components = listOf(junit, mockWebServer)
     }

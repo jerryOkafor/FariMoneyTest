@@ -129,6 +129,7 @@ dependencies {
     implementation(Kotlin.stdlib)
     implementation(Kotlin.coroutineCore)
     implementation(Kotlin.coroutineAndroid)
+    debugImplementation(Kotlin.coroutineTest)
 
 
     implementation(AndroidX.coreKtx)
@@ -170,10 +171,22 @@ dependencies {
     Network.components.forEach { implementation(it) }
 
     /**Test*/
+    testImplementation(AndroidTest.testRunner)
+    testImplementation(AndroidTest.testCoreKtx)
+    testImplementation(AndroidTest.testRules)
     testImplementation(AndroidTest.testExtJunitKtx)
+    testImplementation(AndroidTest.testExtTruth)
+    testImplementation(Test.mockitoInline)
+    testImplementation(Test.mockWebServer)
+
+    testImplementation(Kotlin.coroutineCore)
 
     testImplementation(AndroidTest.espresso)
     testImplementation(AndroidTest.espressoContrib)
+
+    testImplementation(AndroidX.archCoreTesting)
+    testImplementation(Room.roomTesting)
+    testImplementation(Test.robolectric)
 
 
     /**Android Test*/
