@@ -1,4 +1,4 @@
-name: Android Pull Request & Master CI
+name: Master - Run Tests and Build APK
 
 on:
   pull_request:
